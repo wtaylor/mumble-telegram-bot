@@ -1,0 +1,23 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mumble-telegram-bot
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mumble-telegram-bot
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: mumble-telegram-bot
+    spec:
+      containers:
+      - name: mumble-telegram-bot
+        image: mumble-telegram-bot:latest
+        volumeMounts:
+        - mountPath: /var/run/mumble-telegram-bot
+          name: config
+      volumes:
+      - name: config
+        configMap:
+          name: mumble-telegram-bot-cm

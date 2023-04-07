@@ -1,0 +1,11 @@
+state_file_path: ./mumble-telegram-bot-state.json
+mumble:
+  server_address: localhost
+  server_port: 64738
+  insecure_disable_certificate_verification: true
+  username: MumbleTelegramBot
+  password: Test123
+  filter_out_inferred_bot_users: true
+telegram:
+  chat_id: -000000000
+  token: myToken

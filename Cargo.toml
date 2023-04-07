@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "mumble-telegram-bot",
+    "mumble-protocol-rs",
+    "mumble-client-rs"
+]

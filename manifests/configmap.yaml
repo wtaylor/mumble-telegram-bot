@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mumble-telegram-bot-cm
+data:
+  config.yaml: |
+    mumble:
+      server_address: localhost:64738
+    telegram:
+      chat_id: -000000000
+      token: myToken
+    username_map:
+      - mumble: Will
+        telegram: "@MrCactuso"

@@ -1,0 +1,11 @@
+version: '3'
+services:
+  web:
+    image: docker.io/mumblevoip/mumble-server:v1.4.230
+    container_name: mumble_server
+    hostname: mumble-server
+    environment:
+      MUMBLE_CONFIG_SERVER_PASSWORD: Test123
+    ports:
+    - "64738:64738"
+    - "64738:64738/udp"

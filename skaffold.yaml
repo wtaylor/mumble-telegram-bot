@@ -1,0 +1,15 @@
+apiVersion: skaffold/v4beta4
+kind: Config
+build:
+  artifacts:
+  - image: mumble-telegram-bot
+    context: .
+    docker:
+      dockerfile: Dockerfile
+manifests:
+  kustomize:
+    paths:
+    - ./manifests
+deploy:
+  kubectl:
+    defaultNamespace: default
