@@ -1,5 +1,6 @@
 FROM docker.io/rustlang/rust:nightly-bullseye AS build
 WORKDIR /source
+RUN apt-get update && apt-get install -y protobuf-compiler
 COPY . .
 RUN cargo build --release
 
