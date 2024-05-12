@@ -3,7 +3,8 @@ use std::io::ErrorKind;
 use std::sync::Arc;
 use std::time::{Duration, SystemTime};
 use tokio::net::TcpStream;
-use tokio_rustls::rustls::{ClientConfig, ServerName};
+use rustls_pki_types::ServerName;
+use tokio_rustls::rustls::{ClientConfig};
 use tokio_rustls::TlsConnector;
 use mumble_protocol_rs::control::{ControlCodec, ControlPacket, protobuf};
 use tokio_util::codec::{Decoder, Framed};
@@ -65,7 +66,6 @@ async fn ping_server_on_interval(interval: u64, packet_sender: mpsc::Sender<Cont
 
 async fn establish_tls_connection(config: &MumbleClientConfig) -> Result<Framed<TlsStream<TcpStream>, ControlCodec>, Box<dyn Error>> {
     let mut tls_config = ClientConfig::builder()
-        .with_safe_defaults()
         .with_root_certificates(create_root_certificate_store().unwrap())
         .with_no_client_auth();
 
@@ -73,10 +73,12 @@ async fn establish_tls_connection(config: &MumbleClientConfig) -> Result<Framed<
         tls_config.dangerous().set_certificate_verifier(Arc::new(NoCertificateVerification {}));
     }
 
-    let dns_name = match &config.override_tls_server_name {
-        Some(server_name) => ServerName::try_from(server_name.clone().as_str()),
-        None => ServerName::try_from(config.server_address.clone().as_str())
-    }.unwrap();
+    let tls_server_name = match &config.override_tls_server_name {
+        Some(server_name) => server_name,
+        None => &config.server_address
+    }.clone();
+
+    let dns_name = ServerName::try_from(tls_server_name).unwrap();
 
     info!("Connecting to mumble server: {}", config.connect_address());
 

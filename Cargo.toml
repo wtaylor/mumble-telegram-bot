@@ -1,4 +1,5 @@
 [workspace]
+resolver = "2"
 members = [
     "mumble-telegram-bot",
     "mumble-protocol-rs",

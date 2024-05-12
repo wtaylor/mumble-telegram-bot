@@ -78,13 +78,13 @@ impl TelegramSenderActor {
 
                 match self.pinned_mumble_status_message {
                     Some(message_id) => {
-                        self.teloxide_bot.edit_message_text(
+                        let _ = self.teloxide_bot.edit_message_text(
                             Recipient::Id(ChatId(self.telegram_chat_id)),
                             MessageId(message_id),
                             message).await;
                     },
                     None => {
-                        self.teloxide_bot.send_message(
+                        let _ = self.teloxide_bot.send_message(
                             Recipient::Id(ChatId(self.telegram_chat_id)),
                             message).await;
                     }
